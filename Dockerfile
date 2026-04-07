@@ -2,9 +2,7 @@ FROM n8nio/n8n:latest
 
 USER root
 
-RUN apt-get update && apt-get install -y python3 make g++ libvips-dev && rm -rf /var/lib/apt/lists/*
-
-RUN cd /usr/local/lib/node_modules/n8n && npm install sharp
+RUN cd /usr/local/lib/node_modules/n8n && npm install --platform=linux --arch=x64 sharp
 
 ENV NODE_FUNCTION_ALLOW_EXTERNAL=sharp
 ENV NODE_PATH=/usr/local/lib/node_modules/n8n/node_modules
