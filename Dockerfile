@@ -1,11 +1,15 @@
-FROM n8nio/n8n:latest
+FROM node:20-slim
 
-USER root
+RUN apt-get update && \
+    apt-get install -y libvips-dev python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/local/lib/node_modules/n8n && npm install --platform=linux --arch=x64 sharp
+RUN npm install -g n8n sharp
 
 ENV NODE_FUNCTION_ALLOW_EXTERNAL=sharp
-ENV NODE_PATH=/usr/local/lib/node_modules/n8n/node_modules
+ENV NODE_PATH=/usr/local/lib/node_modules
 ENV N8N_RUNNERS_ENABLED=false
 
-USER node
+EXPOSE 5678
+
+CMD ["n8n", "start"]
